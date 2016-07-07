@@ -114,4 +114,7 @@ public class Main {
         this.tempMax = tempMax;
     }
 
+    public String getTempFormatted(){
+        return String.format("%.2f°",temp);
+    }
 }
