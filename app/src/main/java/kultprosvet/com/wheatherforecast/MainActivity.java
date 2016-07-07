@@ -1,5 +1,6 @@
 package kultprosvet.com.wheatherforecast;
 
+import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,13 +20,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import kultprosvet.com.wheatherforecast.api.TodayForecast;
+import kultprosvet.com.wheatherforecast.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+       binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
     }
     public void getData(View view){
         AsyncTask<String,Void,TodayForecast> task=new AsyncTask<String, Void, TodayForecast>() {
@@ -65,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                             .setMessage(error)
                             .setPositiveButton("Close",null)
                             .show();
+                }else {
+                    binding.setForecast(forecast);
+                    binding.notifyChange();
                 }
 
 
