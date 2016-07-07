@@ -1,6 +1,8 @@
 package kultprosvet.com.wheatherforecast;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -77,5 +79,29 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         task.execute("Dnipropetrovsk");
+    }
+    public void getImage(View view){
+        AsyncTask<Void,Void,Bitmap> task=new AsyncTask<Void, Void, Bitmap>() {
+            @Override
+            protected Bitmap doInBackground(Void... params) {
+                HttpURLConnection connection = null;
+                try {
+                    URL url = new URL("http://www.psdgraphics.com/file/weather-icon.jpg");
+                    connection = (HttpURLConnection) url.openConnection();
+                    InputStream input = connection.getInputStream();
+                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                    return myBitmap;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                binding.icon.setImageBitmap(bitmap);
+            }
+        };
+        task.execute();
     }
 }

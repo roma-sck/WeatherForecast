@@ -24,15 +24,45 @@
 	    android:text="@{forecast.name,default=London}"
 		/>
 	<TextView
+		android:id="@+id/temp"
 		android:layout_below="@id/city"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text='@{forecast.main.tempFormatted,default="23°"}'/>
+	<TextView
+		android:id="@+id/min"
+		android:layout_below="@id/city"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/temp"
+		android:text='@{forecast.main.tempMinFormatted,default="15°"}'
+		android:layout_marginLeft="10dp"/>
+	<TextView
+		android:id="@+id/max"
+		android:layout_below="@id/city"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/min"
+		android:text='@{forecast.main.tempMaxFormatted,default="25°"}'/>
+	<ImageView
+		android:id="@+id/icon"
+		android:layout_width="200dp"
+		android:layout_height="200dp"
+		android:layout_centerHorizontal="true"
+	    android:layout_centerVertical="true"
+		/>
+
 	<Button
 		android:layout_marginTop="100dp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="Get data"
 		android:onClick="getData"/>
+	<Button
+		android:layout_marginTop="150dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Get image"
+		android:onClick="getImage"/>
 </RelativeLayout>
 </layout>
