@@ -21,67 +21,49 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import kultprosvet.com.wheatherforecast.api.OpenWeatherApi;
 import kultprosvet.com.wheatherforecast.api.TodayForecast;
 import kultprosvet.com.wheatherforecast.databinding.ActivityMainBinding;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
     }
-    public void getData(View view){
-        AsyncTask<String,Void,TodayForecast> task=new AsyncTask<String, Void, TodayForecast>() {
-            String error;
-            @Override
-            protected TodayForecast doInBackground(String... strings) {
-                URL url = null;
-                try {
-                    url = new URL("http://api.openweathermap.org/data/2.5/weather?q="+strings[0]+"&units=metric&APPID=6549ddea7eea1f5e33c18d552b0c2837");
-                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                    InputStream in = urlConnection.getInputStream();
-                    BufferedReader r = new BufferedReader(new InputStreamReader(in));
-                    StringBuilder total = new StringBuilder();
-                    String line;
-                    while ((line = r.readLine()) != null) {
-                        total.append(line);
+
+    public void getData(View view) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.openweathermap.org/data/2.5/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final OpenWeatherApi service = retrofit.create(OpenWeatherApi.class);
+
+        service.getTodayForecast("Dnipropetrovsk", "metric", "6549ddea7eea1f5e33c18d552b0c2837").enqueue(
+                new Callback<TodayForecast>() {
+                    @Override
+                    public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
+
                     }
-                    Gson gson=new Gson();
-                    return gson.fromJson(total.toString(),TodayForecast.class);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                    error=e.getLocalizedMessage();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    error=e.getLocalizedMessage();
-                }
 
+                    @Override
+                    public void onFailure(Call<TodayForecast> call, Throwable t) {
 
-                return null;
-            }
+                    }
+                });
+   }
 
-            @Override
-            protected void onPostExecute(TodayForecast forecast) {
-                if (forecast==null){
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Error")
-                            .setMessage(error)
-                            .setPositiveButton("Close",null)
-                            .show();
-                }else {
-                    binding.setForecast(forecast);
-                    binding.notifyChange();
-                }
-
-
-            }
-        };
-        task.execute("Dnipropetrovsk");
-    }
-    public void getImage(View view){
-        AsyncTask<Void,Void,Bitmap> task=new AsyncTask<Void, Void, Bitmap>() {
+    public void getImage(View view) {
+        AsyncTask<Void, Void, Bitmap> task = new AsyncTask<Void, Void, Bitmap>() {
             @Override
             protected Bitmap doInBackground(Void... params) {
                 HttpURLConnection connection = null;
