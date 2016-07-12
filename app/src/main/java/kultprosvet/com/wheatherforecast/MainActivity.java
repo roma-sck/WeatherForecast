@@ -7,11 +7,13 @@ import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                //.client(client)
                 .baseUrl("http://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
                 binding.setForecast(response.body());
             }
-
             @Override
             public void onFailure(Call<TodayForecast> call, Throwable t) {
                 new AlertDialog.Builder(MainActivity.this)
@@ -75,27 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void getImage(View view) {
-        AsyncTask<Void, Void, Bitmap> task = new AsyncTask<Void, Void, Bitmap>() {
-            @Override
-            protected Bitmap doInBackground(Void... params) {
-                HttpURLConnection connection = null;
-                try {
-                    URL url = new URL("http://www.psdgraphics.com/file/weather-icon.jpg");
-                    connection = (HttpURLConnection) url.openConnection();
-                    InputStream input = connection.getInputStream();
-                    Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                    return myBitmap;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                binding.icon.setImageBitmap(bitmap);
-            }
-        };
-        task.execute();
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int size=Math.round(metrics.density*200);
+        Picasso.with(this).load("http://img.4k-wallpaper.net/wide_1610/mountains-landscape_120.jpeg")
+                .resize(size,size)
+                .centerInside()
+                .into(binding.icon);
     }
 }
