@@ -101,7 +101,7 @@ public class Forecast16 {
      * @return
      *     The list
      */
-    public java.util.List<ForecastItem> getForecastItem() {
+    public java.util.List<ForecastItem> getForecastList() {
         return forecastItem;
     }
 

@@ -2,6 +2,7 @@
 package kultprosvet.com.wheatherforecast.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -196,6 +197,12 @@ public class ForecastItem {
      */
     public void setRain(Double rain) {
         this.rain = rain;
+    }
+
+    public String getDate(){
+        Date dt=new Date(getDt()*1000);
+        return dt.toString();
+
     }
 
 }
