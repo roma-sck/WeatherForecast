@@ -205,4 +205,8 @@ public class ForecastItem {
 
     }
 
+    public String getTempFormatted(){
+        return String.format("min %.2f max %.2f",getTemp().getMin(),getTemp().getMax());
+    }
+
 }
