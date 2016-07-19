@@ -56,11 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<TodayForecast> call, Throwable t) {
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("Error")
-                                .setMessage(t.getLocalizedMessage())
-                                .setPositiveButton("Close", null)
-                                .show();
+                        showAlertDialog(t);
                     }
                 });
     }
@@ -77,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                              @Override
                              public void onFailure(Call<Forecast16> call, Throwable t) {
-
+                                 showAlertDialog(t);
                              }
                          }
                 );
@@ -90,5 +86,13 @@ public class MainActivity extends AppCompatActivity {
                 .resize(size, size)
                 .centerInside()
                 .into(binding.icon);
+    }
+
+    public void showAlertDialog(Throwable t) {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Error")
+                .setMessage(t.getLocalizedMessage())
+                .setPositiveButton("Close", null)
+                .show();
     }
 }
