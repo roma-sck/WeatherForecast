@@ -39,5 +39,14 @@
             android:layout_alignStart="@+id/row_date"
             android:layout_marginTop="30dp" />
 
+        <TextView
+            android:id="@+id/row_weather_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{item.weather.get(0).main, default="sunny"}'
+            android:layout_alignTop="@+id/row_temp"
+            android:layout_toEndOf="@+id/row_temp"
+            android:layout_marginStart="50dp" />
+
     </RelativeLayout>
 </layout>
