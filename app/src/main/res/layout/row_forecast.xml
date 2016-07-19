@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android" >
     <data>
         <variable
             name="item"
             type="kultprosvet.com.wheatherforecast.models.ForecastItem"/>
     </data>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        >
+        android:paddingBottom="@dimen/row_forecast_bottom_top">
 
         <ImageView
             android:id="@+id/row_icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
+            android:layout_width="@dimen/row_icon_size_width_height"
+            android:layout_height="@dimen/row_icon_size_width_height"
+            android:layout_marginStart="@dimen/row_icon_margin"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true" />
 
@@ -25,8 +22,10 @@
             android:id="@+id/row_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_17"
             android:text='@{item.date, default="date"}'
-            android:layout_marginStart="19dp"
+            android:layout_marginTop="@dimen/row_date_margin_top"
+            android:layout_marginStart="@dimen/row_date_margin_start"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/row_icon" />
 
@@ -34,19 +33,21 @@
             android:id="@+id/row_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_17"
             android:text='@{item.tempFormatted, default="temp"}'
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/row_date"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="@dimen/row_temp_margin_top" />
 
         <TextView
             android:id="@+id/row_weather_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_17"
             android:text='@{item.weather.get(0).main, default="sunny"}'
             android:layout_alignTop="@+id/row_temp"
             android:layout_toEndOf="@+id/row_temp"
-            android:layout_marginStart="50dp" />
+            android:layout_marginStart="@dimen/row_weather_main_margin_start" />
 
     </RelativeLayout>
 </layout>

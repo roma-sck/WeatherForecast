@@ -4,11 +4,11 @@ import android.databinding.DataBindingUtil;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 
 import com.squareup.picasso.Picasso;
 
 import kultprosvet.com.wheatherforecast.api.ApiServiceBuilder;
+import kultprosvet.com.wheatherforecast.api.Config;
 import kultprosvet.com.wheatherforecast.models.Forecast16;
 import kultprosvet.com.wheatherforecast.api.OpenWeatherApi;
 import kultprosvet.com.wheatherforecast.models.TodayForecast;
@@ -19,7 +19,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
     private ActivityMainBinding mBinding;
     private OpenWeatherApi mService;
     private ForecastAdapter mAdapter;
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
                         mBinding.setForecast(response.body());
-                        getImage(response.body().getWeather().get(0).getMain());
+                        getIcon(response.body().getWeather().get(0).getMain());
                     }
                     @Override
                     public void onFailure(Call<TodayForecast> call, Throwable t) {
@@ -69,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 );
     }
 
-    public void getImage(String weatherMainStatus) {
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int size = Math.round(metrics.density * 100);
+    public void getIcon(String weatherMainStatus) {
+        int size = WeatherIconSwitcher.getIconSize(this);
         int icon = WeatherIconSwitcher.switchIcon(weatherMainStatus);
         Picasso.with(this).load(icon)
                 .resize(size, size)
@@ -81,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void showAlertDialog(Throwable t) {
         new AlertDialog.Builder(MainActivity.this)
-                .setTitle("Error")
+                .setTitle(getString(R.string.error_dailog_title))
                 .setMessage(t.getLocalizedMessage())
-                .setPositiveButton("Close", null)
+                .setPositiveButton(getString(R.string.error_dailog_btn_text), null)
                 .show();
     }
 }

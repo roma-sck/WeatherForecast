@@ -1,6 +1,5 @@
 package kultprosvet.com.wheatherforecast.api;
 
-import kultprosvet.com.wheatherforecast.Config;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

@@ -1,4 +1,4 @@
-package kultprosvet.com.wheatherforecast;
+package kultprosvet.com.wheatherforecast.api;
 
 public class Config {
     public static final String API_KEY = "6549ddea7eea1f5e33c18d552b0c2837";
