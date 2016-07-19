@@ -23,55 +23,59 @@
 		android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:text="@{forecast.name,default=London}"
-		/>
-	<TextView
-		android:id="@+id/temp"
-		android:layout_below="@id/city"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text='@{forecast.main.tempFormatted,default="23°"}'/>
-	<TextView
-		android:id="@+id/min"
-		android:layout_below="@id/city"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/temp"
-		android:text='@{forecast.main.tempMinFormatted,default="15°"}'
-		android:layout_marginLeft="10dp"/>
-	<TextView
-		android:id="@+id/max"
-		android:layout_below="@id/city"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_toRightOf="@id/min"
-		android:text='@{forecast.main.tempMaxFormatted,default="25°"}'/>
+        android:textSize="20sp"
+		android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true" />
+
 	<ImageView
 		android:id="@+id/icon"
-		android:layout_width="200dp"
-		android:layout_height="200dp"
-		android:layout_centerHorizontal="true"
-		/>
+		android:layout_width="100dp"
+		android:layout_height="100dp"
+		android:layout_below="@+id/city"
+		android:layout_centerHorizontal="true" />
 
-	<Button
-		android:layout_marginTop="100dp"
+	<TextView
+		android:id="@+id/temp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Get data"
-		android:onClick="getData"/>
-	<Button
-		android:id="@+id/getimage"
-		android:layout_marginTop="150dp"
+		android:text='@{forecast.main.tempFormatted,default="23°"}'
+        android:textSize="35sp"
+        android:layout_below="@+id/icon"
+        android:layout_centerHorizontal="true" />
+	<TextView
+		android:id="@+id/min"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Get image"
-		android:onClick="getImage"/>
+		android:text='@{forecast.main.tempMinFormatted,default="15°"}'
+		android:layout_marginLeft="10dp"
+		android:layout_alignTop="@+id/max"
+		android:layout_alignParentStart="true" />
+	<TextView
+		android:id="@+id/max"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text='@{forecast.main.tempMaxFormatted,default="25°"}'
+        android:layout_below="@+id/icon"
+        android:layout_toEndOf="@+id/min"
+        android:layout_marginTop="19dp" />
+
+	<!--<TextView-->
+		<!--android:id="@+id/clouds"-->
+		<!--android:layout_width="wrap_content"-->
+		<!--android:layout_height="wrap_content"-->
+		<!--android:text='@{forecast.weather.main,default="clouds°"}'-->
+        <!--android:layout_alignTop="@+id/max"-->
+        <!--android:layout_alignEnd="@+id/recycleview"-->
+        <!--android:layout_marginEnd="18dp" />-->
+
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycleview"
-		android:layout_below="@id/getimage"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:layoutManager="LinearLayoutManager"
-		>
+		android:layout_below="@+id/icon"
+		android:layout_alignParentEnd="true"
+		android:layout_marginTop="93dp">
 
 	</android.support.v7.widget.RecyclerView>
 </RelativeLayout>

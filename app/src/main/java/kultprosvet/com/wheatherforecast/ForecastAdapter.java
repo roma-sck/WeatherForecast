@@ -12,9 +12,6 @@ import java.util.List;
 import kultprosvet.com.wheatherforecast.api.ForecastItem;
 import kultprosvet.com.wheatherforecast.databinding.RowForecastBinding;
 
-/**
- * Created by Stanislav Volnyansky on 14.07.16.
- */
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder> {
 
     List<ForecastItem> items;
@@ -50,7 +47,6 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder
         public Holder(View itemView) {
             super(itemView);
             binding=DataBindingUtil.bind(itemView);
-            //binding=DataBindingUtil.
         }
 
         public ForecastItem getItem() {

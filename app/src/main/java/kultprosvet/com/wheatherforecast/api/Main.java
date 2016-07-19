@@ -115,13 +115,13 @@ public class Main {
     }
 
     public String getTempFormatted(){
-        return String.format("%.2f°",temp);
-    }
-    public String getTempMaxFormatted(){
-        return String.format("-%.2f°",tempMax);
+        return String.format("%.1f°",temp);
     }
     public String getTempMinFormatted(){
-        return String.format("%.2f°",tempMin);
+        return String.format("%.1f°",tempMin);
+    }
+    public String getTempMaxFormatted(){
+        return String.format(" / %.1f°",tempMax);
     }
 
 }

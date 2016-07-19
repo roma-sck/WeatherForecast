@@ -1,6 +1,7 @@
 package kultprosvet.com.wheatherforecast;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,11 +40,37 @@ public class MainActivity extends AppCompatActivity {
 
         service = retrofit.create(OpenWeatherApi.class);
 
+        getTodayForecast();
+
+        getForecast16();
+    }
+
+    public void getTodayForecast() {
+        service.getTodayForecast(Config.LOCATION_DNEPR, Config.WEATHER_UNITS, Config.API_KEY)
+                .enqueue(new Callback<TodayForecast>() {
+                    @Override
+                    public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
+                        binding.setForecast(response.body());
+                        System.out.println(response.body().getWeather().get(0).getMain());
+                        getImage();
+                    }
+                    @Override
+                    public void onFailure(Call<TodayForecast> call, Throwable t) {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Error")
+                                .setMessage(t.getLocalizedMessage())
+                                .setPositiveButton("Close", null)
+                                .show();
+                    }
+                });
+    }
+
+    public void getForecast16() {
         service.getForecast16(Config.LOCATION_DNEPR, Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<Forecast16>() {
                              @Override
                              public void onResponse(Call<Forecast16> call, Response<Forecast16> response) {
-                                 adapter=new ForecastAdapter();
+                                 adapter = new ForecastAdapter();
                                  adapter.setItems(response.body().getForecastList());
                                  binding.recycleview.setAdapter(adapter);
                              }
@@ -56,35 +83,11 @@ public class MainActivity extends AppCompatActivity {
                 );
     }
 
-    public void getData(View view) {
-//        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-//        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
-        service.getTodayForecast(Config.LOCATION_DNEPR, Config.WEATHER_UNITS, Config.API_KEY)
-                .enqueue(new Callback<TodayForecast>() {
-                    @Override
-                    public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
-                        binding.setForecast(response.body());
-                        System.out.println(response.body().getWeather().get(0).getMain());
-                        System.out.println(response.body().getMain().getTempMaxFormatted());
-                    }
-                    @Override
-                    public void onFailure(Call<TodayForecast> call, Throwable t) {
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("Error")
-                                .setMessage(t.getLocalizedMessage())
-                                .setPositiveButton("Close", null)
-                                .show();
-                    }
-                });
-
-    }
-    public void getImage(View view) {
+    public void getImage() {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int size=Math.round(metrics.density*200);
-        Picasso.with(this).load("http://img.4k-wallpaper.net/wide_1610/mountains-landscape_120.jpeg")
-                .resize(size,size)
+        int size = Math.round(metrics.density * 100);
+        Picasso.with(this).load(R.drawable.cloud)
+                .resize(size, size)
                 .centerInside()
                 .into(binding.icon);
     }
