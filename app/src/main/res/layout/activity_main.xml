@@ -8,7 +8,7 @@
 	<data>
 		<variable
 			name="forecast"
-			type="kultprosvet.com.wheatherforecast.api.TodayForecast"/>
+			type="kultprosvet.com.wheatherforecast.models.TodayForecast"/>
 	</data>
 <RelativeLayout
 	android:layout_width="match_parent"
@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:text='@{forecast.weather.get(0).description,default="rain"}'
         android:layout_below="@+id/temp"
-        android:layout_alignStart="@+id/weather_main" />
+        android:layout_alignEnd="@+id/weather_main" />
 
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/recycleview"

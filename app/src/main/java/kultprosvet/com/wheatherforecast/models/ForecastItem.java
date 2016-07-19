@@ -1,8 +1,7 @@
 
-package kultprosvet.com.wheatherforecast.api;
+package kultprosvet.com.wheatherforecast.models;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

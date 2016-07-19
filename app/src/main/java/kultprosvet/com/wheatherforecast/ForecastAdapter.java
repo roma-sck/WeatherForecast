@@ -2,7 +2,6 @@ package kultprosvet.com.wheatherforecast;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.tool.DataBindingBuilder;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import kultprosvet.com.wheatherforecast.api.ForecastItem;
+import kultprosvet.com.wheatherforecast.models.ForecastItem;
 import kultprosvet.com.wheatherforecast.databinding.RowForecastBinding;
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder> {
@@ -62,14 +61,29 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder
         public Holder setItem(ForecastItem item) {
             this.item = item;
             binding.setItem(item);
-            getRowIcon();
+            getRowIcon(item.getWeather().get(0).getMain());
             return this;
         }
 
-        private void getRowIcon() {
+        private void getRowIcon(String weatherMainStatus) {
             DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
             int size = Math.round(metrics.density * 100);
-            Picasso.with(mContext).load(R.drawable.cloud)
+            int statusIcon = R.drawable.cloudy;
+            switch (weatherMainStatus) {
+                case "Thunderstorm" : statusIcon = R.drawable.storm;
+                    break;
+                case "Rain" : statusIcon = R.drawable.rain;
+                    break;
+                case "Clouds" : statusIcon = R.drawable.cloudy;
+                    break;
+                case "Clear" : statusIcon = R.drawable.sun;
+                    break;
+                case "Atmosphere" : statusIcon = R.drawable.cloudy;
+                    break;
+                case "Snow" : statusIcon = R.drawable.cloudy;
+                    break;
+            }
+            Picasso.with(mContext).load(statusIcon)
                     .resize(size, size)
                     .centerInside()
                     .into(binding.rowIcon);

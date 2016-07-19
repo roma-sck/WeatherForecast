@@ -1,7 +1,7 @@
 package kultprosvet.com.wheatherforecast.api;
 
-import com.google.gson.JsonElement;
-
+import kultprosvet.com.wheatherforecast.models.Forecast16;
+import kultprosvet.com.wheatherforecast.models.TodayForecast;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
