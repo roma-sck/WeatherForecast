@@ -1,27 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-	<data>
-		<variable name="item" type="kultprosvet.com.wheatherforecast.api.ForecastItem"/>
-	</data>
+    <data>
+        <variable
+            name="item"
+            type="kultprosvet.com.wheatherforecast.api.ForecastItem"/>
+    </data>
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	              android:layout_width="match_parent"
-	              android:layout_height="wrap_content"
-	              android:orientation="horizontal">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        >
 
-		<TextView
-			android:id="@+id/date"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-		    android:text="@{item.date}"
-			/>
+        <ImageView
+            android:id="@+id/row_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
-		<TextView
-			android:id="@+id/description"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@{item.tempFormatted}"/>
+        <TextView
+            android:id="@+id/row_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{item.date, default="date"}'
+            android:layout_marginStart="19dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/row_icon" />
 
-	</LinearLayout>
+        <TextView
+            android:id="@+id/row_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{item.tempFormatted, default="temp"}'
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/row_date"
+            android:layout_marginTop="30dp" />
+
+    </RelativeLayout>
 </layout>
