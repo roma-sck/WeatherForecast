@@ -1,4 +1,4 @@
-package kultprosvet.com.wheatherforecast;
+package kultprosvet.com.wheatherforecast.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

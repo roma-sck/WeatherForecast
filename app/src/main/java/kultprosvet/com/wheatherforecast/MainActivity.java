@@ -13,6 +13,7 @@ import kultprosvet.com.wheatherforecast.models.Forecast16;
 import kultprosvet.com.wheatherforecast.api.OpenWeatherApi;
 import kultprosvet.com.wheatherforecast.models.TodayForecast;
 import kultprosvet.com.wheatherforecast.databinding.ActivityMainBinding;
+import kultprosvet.com.wheatherforecast.utils.WeatherIconSwitcher;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
                         mBinding.setForecast(response.body());
-                        System.out.println(response.body().getWeather().get(0).getMain());
-                        getImage();
+                        getImage(response.body().getWeather().get(0).getMain());
                     }
                     @Override
                     public void onFailure(Call<TodayForecast> call, Throwable t) {
@@ -69,10 +69,11 @@ public class MainActivity extends AppCompatActivity {
                 );
     }
 
-    public void getImage() {
+    public void getImage(String weatherMainStatus) {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int size = Math.round(metrics.density * 100);
-        Picasso.with(this).load(R.drawable.cloud)
+        int icon = WeatherIconSwitcher.switchIcon(weatherMainStatus);
+        Picasso.with(this).load(icon)
                 .resize(size, size)
                 .centerInside()
                 .into(mBinding.icon);

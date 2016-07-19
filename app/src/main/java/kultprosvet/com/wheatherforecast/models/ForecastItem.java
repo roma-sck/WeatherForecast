@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import kultprosvet.com.wheatherforecast.DateConverter;
+import kultprosvet.com.wheatherforecast.utils.DateConverter;
 
 public class ForecastItem {
 

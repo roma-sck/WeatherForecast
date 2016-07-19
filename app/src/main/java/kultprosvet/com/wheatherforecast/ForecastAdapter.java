@@ -14,6 +14,7 @@ import java.util.List;
 
 import kultprosvet.com.wheatherforecast.models.ForecastItem;
 import kultprosvet.com.wheatherforecast.databinding.RowForecastBinding;
+import kultprosvet.com.wheatherforecast.utils.WeatherIconSwitcher;
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder> {
     private List<ForecastItem> items;
@@ -68,22 +69,8 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder
         private void getRowIcon(String weatherMainStatus) {
             DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
             int size = Math.round(metrics.density * 100);
-            int statusIcon = R.drawable.cloudy;
-            switch (weatherMainStatus) {
-                case "Thunderstorm" : statusIcon = R.drawable.storm;
-                    break;
-                case "Rain" : statusIcon = R.drawable.rain;
-                    break;
-                case "Clouds" : statusIcon = R.drawable.cloudy;
-                    break;
-                case "Clear" : statusIcon = R.drawable.sun;
-                    break;
-                case "Atmosphere" : statusIcon = R.drawable.cloudy;
-                    break;
-                case "Snow" : statusIcon = R.drawable.cloudy;
-                    break;
-            }
-            Picasso.with(mContext).load(statusIcon)
+            int icon = WeatherIconSwitcher.switchIcon(weatherMainStatus);
+            Picasso.with(mContext).load(icon)
                     .resize(size, size)
                     .centerInside()
                     .into(binding.rowIcon);
