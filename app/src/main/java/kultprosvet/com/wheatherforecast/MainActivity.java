@@ -1,6 +1,7 @@
 package kultprosvet.com.wheatherforecast;
 
 import android.databinding.DataBindingUtil;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mBinding;
     private OpenWeatherApi mService;
     private ForecastAdapter mAdapter;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         mService = ApiServiceBuilder.getApiService();
 
-        getTodayForecast();
+        initSwipeToRefresh();
 
+        getTodayForecast();
         getForecast16();
     }
 
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         showAlertDialog(t);
                     }
                 });
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void getForecast16() {
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                              }
                          }
                 );
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void getIcon(String weatherMainStatus) {
@@ -75,6 +80,17 @@ public class MainActivity extends AppCompatActivity {
                 .resize(size, size)
                 .centerInside()
                 .into(mBinding.icon);
+    }
+
+    private void initSwipeToRefresh() {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_to_refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getTodayForecast();
+                getForecast16();
+            }
+        });
     }
 
     public void showAlertDialog(Throwable t) {
