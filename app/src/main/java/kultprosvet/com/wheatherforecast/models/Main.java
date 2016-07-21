@@ -1,5 +1,5 @@
 
-package kultprosvet.com.wheatherforecast.api;
+package kultprosvet.com.wheatherforecast.models;
 
 
 import com.google.gson.annotations.Expose;
@@ -13,7 +13,7 @@ public class Main {
     private Double temp;
     @SerializedName("pressure")
     @Expose
-    private Integer pressure;
+    private Double pressure;
     @SerializedName("humidity")
     @Expose
     private Integer humidity;
@@ -47,7 +47,7 @@ public class Main {
      * @return
      *     The pressure
      */
-    public Integer getPressure() {
+    public Double getPressure() {
         return pressure;
     }
 
@@ -56,7 +56,7 @@ public class Main {
      * @param pressure
      *     The pressure
      */
-    public void setPressure(Integer pressure) {
+    public void setPressure(Double pressure) {
         this.pressure = pressure;
     }
 
@@ -115,13 +115,13 @@ public class Main {
     }
 
     public String getTempFormatted(){
-        return String.format("%.2f°",temp);
-    }
-    public String getTempMaxFormatted(){
-        return String.format("-%.2f°",tempMax);
+        return String.format("%.1f°",getTemp());
     }
     public String getTempMinFormatted(){
-        return String.format("%.2f°",tempMin);
+        return String.format("%.1f°",getTempMin());
+    }
+    public String getTempMaxFormatted(){
+        return String.format(" / %.1f°",getTempMax());
     }
 
 }

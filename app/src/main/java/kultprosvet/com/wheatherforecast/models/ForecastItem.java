@@ -1,11 +1,12 @@
 
-package kultprosvet.com.wheatherforecast.api;
+package kultprosvet.com.wheatherforecast.models;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import kultprosvet.com.wheatherforecast.utils.DateConverter;
 
 public class ForecastItem {
 
@@ -200,13 +201,11 @@ public class ForecastItem {
     }
 
     public String getDate(){
-        Date dt=new Date(getDt()*1000);
-        return dt.toString();
-
+        return DateConverter.convertDate(getDt());
     }
 
     public String getTempFormatted(){
-        return String.format("min %.2f max %.2f",getTemp().getMin(),getTemp().getMax());
+        return String.format("%.1f °/ %.1f °",getTemp().getMin(), getTemp().getMax());
     }
 
 }

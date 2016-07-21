@@ -1,5 +1,5 @@
 
-package kultprosvet.com.wheatherforecast.api;
+package kultprosvet.com.wheatherforecast.models;
 
 import java.util.ArrayList;
 import java.util.List;

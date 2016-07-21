@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+    <data>
+        <variable
+            name="item"
+            type="kultprosvet.com.wheatherforecast.models.ForecastItem"/>
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/row_forecast_bottom_top">
 
-	<data>
-		<variable name="item" type="kultprosvet.com.wheatherforecast.api.ForecastItem"/>
-	</data>
+        <ImageView
+            android:id="@+id/row_icon"
+            android:layout_width="@dimen/row_icon_size_width_height"
+            android:layout_height="@dimen/row_icon_size_width_height"
+            android:layout_marginStart="@dimen/row_icon_margin"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	              android:layout_width="match_parent"
-	              android:layout_height="wrap_content"
-	              android:orientation="horizontal">
+        <TextView
+            android:id="@+id/row_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_17"
+            android:text='@{item.date, default="date"}'
+            android:layout_marginTop="@dimen/row_date_margin_top"
+            android:layout_marginStart="@dimen/row_date_margin_start"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/row_icon" />
 
-		<TextView
-			android:id="@+id/date"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-		    android:text="@{item.date}"
-			/>
+        <TextView
+            android:id="@+id/row_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_17"
+            android:text='@{item.tempFormatted, default="temp"}'
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/row_date"
+            android:layout_marginTop="@dimen/row_temp_margin_top" />
 
-		<TextView
-			android:id="@+id/description"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@{item.tempFormatted}"/>
+        <TextView
+            android:id="@+id/row_weather_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_17"
+            android:text='@{item.weather.get(0).main, default="sunny"}'
+            android:layout_alignTop="@+id/row_temp"
+            android:layout_toEndOf="@+id/row_temp"
+            android:layout_marginStart="@dimen/row_weather_main_margin_start" />
 
-	</LinearLayout>
+    </RelativeLayout>
 </layout>
