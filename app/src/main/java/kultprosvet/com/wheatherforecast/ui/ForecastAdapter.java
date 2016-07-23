@@ -1,4 +1,4 @@
-package kultprosvet.com.wheatherforecast;
+package kultprosvet.com.wheatherforecast.ui;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import kultprosvet.com.wheatherforecast.R;
 import kultprosvet.com.wheatherforecast.models.ForecastItem;
 import kultprosvet.com.wheatherforecast.databinding.RowForecastBinding;
 import kultprosvet.com.wheatherforecast.utils.WeatherIconSwitcher;
