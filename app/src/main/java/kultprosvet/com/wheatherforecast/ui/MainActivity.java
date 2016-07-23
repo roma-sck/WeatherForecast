@@ -41,7 +41,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private ForecastAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private static final int REQUEST_PERMISSIONS = 1;
-    GoogleApiClient googleApiClient;
+    private static final int LOCATION_REQUEST_INTERVAL = 1000;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,21 +63,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void onConnected(@Nullable Bundle bundle) {
         Location location = null;
         try{
-            location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         } catch (SecurityException se) {
             System.out.println("permission is not available");
         }
         if (location != null) {
-            mBinding.latitude.setText(String.format("%.6f", location.getLatitude()));
-            mBinding.longitude.setText(String.format("%.6f", location.getLongitude()));
-            mBinding.height.setText(String.format("%.2f", location.getAltitude()));
-            mBinding.accuracy.setText(String.format("%.2f", location.getAccuracy()));
+            showLocationData(location);
         }
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        locationRequest.setInterval(1000);
+        locationRequest.setInterval(LOCATION_REQUEST_INTERVAL);
         try{
-            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
         } catch (SecurityException se) {
             System.out.println("permission is not available");
         }
@@ -83,62 +82,60 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        //not needed
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        //not needed
     }
 
     @Override
     protected void onStart() {
-        if (
-                ContextCompat.checkSelfPermission(
-                        this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED &&
-                        ContextCompat.checkSelfPermission(
-                                this, Manifest.permission.ACCESS_FINE_LOCATION)
-                                == PackageManager.PERMISSION_GRANTED
-                ) {
-            init();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
+            initGoogleApiClient();
         } else {
             ActivityCompat.requestPermissions(this,
-                    new String[]{
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                    }, REQUEST_PERMISSIONS);
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSIONS);
         }
-
-
         super.onStart();
     }
 
-    public void init() {
-        if (googleApiClient==null) {
-            googleApiClient = new GoogleApiClient.Builder(this)
+    public void initGoogleApiClient() {
+        if (mGoogleApiClient ==null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(LocationServices.API)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .build();
         }
-        googleApiClient.connect();
+        mGoogleApiClient.connect();
     }
 
     @Override
     protected void onStop() {
-        if (googleApiClient != null) {
-            googleApiClient.disconnect();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.disconnect();
         }
         super.onStop();
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        showLocationData(location);
+    }
+
+    public void showLocationData(Location location) {
         mBinding.latitude.setText(String.format("%.6f", location.getLatitude()));
         mBinding.longitude.setText(String.format("%.6f", location.getLongitude()));
         mBinding.height.setText(String.format("%.2f", location.getAltitude()));
         mBinding.accuracy.setText(String.format("%.2f", location.getAccuracy()));
+
+        mLocation = location;
     }
 
     @Override
@@ -152,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
 
             if (allGranted) {
-                init();
+                initGoogleApiClient();
             } else {
                 new AlertDialog.Builder(this)
                         .setMessage("Application wouldn't work witount location")
@@ -170,7 +167,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void getTodayForecast() {
-        mService.getTodayForecast(Config.LOCATION_DNEPR, Config.WEATHER_UNITS, Config.API_KEY)
+        String latitude = Config.LOCATION_DNIPRO_LATITUDE;
+        String longitude = Config.LOCATION_DNIPRO_LONGITUDE;
+        if(mLocation != null) {
+            latitude = String.valueOf(mLocation.getLatitude());
+            longitude = String.valueOf(mLocation.getLongitude());
+        }
+
+        mService.getTodayForecast(latitude, longitude, Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<TodayForecast>() {
                     @Override
                     public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
