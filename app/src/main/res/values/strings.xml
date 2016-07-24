@@ -1,6 +1,11 @@
 <resources>
-	<string name="app_name">WheatherForecast</string>
+	<string name="app_name">Weather Forecast</string>
 
-    <string name="error_dailog_title">Error</string>
-    <string name="error_dailog_btn_text">Close</string>
+    <string name="retrofit_alert_dailog_title">Error</string>
+    <string name="retrofit_alert_dailog_btn_text">Close</string>
+
+    <string name="permis_alert_dailog_message">Application would not work without granted location permission</string>
+    <string name="permis_alert_dailog_okbutton_text">Close app</string>
+
+    <string name="error_toast_text">permission is not available</string>
 </resources>

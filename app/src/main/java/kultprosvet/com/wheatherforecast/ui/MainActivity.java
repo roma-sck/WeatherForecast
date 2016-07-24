@@ -13,6 +13,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -65,10 +66,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         try{
             location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         } catch (SecurityException se) {
-            System.out.println("permission is not available");
+            showConnectionErrorToast();
         }
         if (location != null) {
-            showLocationData(location);
+            setLocation(location);
         }
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -76,8 +77,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         try{
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
         } catch (SecurityException se) {
-            System.out.println("permission is not available");
+            showConnectionErrorToast();
         }
+    }
+
+    public void showConnectionErrorToast() {
+        Toast.makeText(this, getString(R.string.error_toast_text), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -126,15 +131,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onLocationChanged(Location location) {
-        showLocationData(location);
+        setLocation(location);
     }
 
-    public void showLocationData(Location location) {
-        mBinding.latitude.setText(String.format("%.6f", location.getLatitude()));
-        mBinding.longitude.setText(String.format("%.6f", location.getLongitude()));
-        mBinding.height.setText(String.format("%.2f", location.getAltitude()));
-        mBinding.accuracy.setText(String.format("%.2f", location.getAccuracy()));
-
+    protected void setLocation(Location location) {
         mLocation = location;
     }
 
@@ -147,33 +147,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     allGranted = false;
                 }
             }
-
             if (allGranted) {
                 initGoogleApiClient();
             } else {
-                new AlertDialog.Builder(this)
-                        .setMessage("Application wouldn't work witount location")
-                        .setPositiveButton("Close app", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                                finish();
-                            }
-                        })
-                        .show();
+                showPermissionAlertDialog();
             }
-
         }
     }
 
     public void getTodayForecast() {
-        String latitude = Config.LOCATION_DNIPRO_LATITUDE;
-        String longitude = Config.LOCATION_DNIPRO_LONGITUDE;
-        if(mLocation != null) {
-            latitude = String.valueOf(mLocation.getLatitude());
-            longitude = String.valueOf(mLocation.getLongitude());
-        }
-        mService.getTodayForecast(latitude, longitude, Config.WEATHER_UNITS, Config.API_KEY)
+        mService.getTodayForecast(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<TodayForecast>() {
                     @Override
                     public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
@@ -182,20 +165,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     }
                     @Override
                     public void onFailure(Call<TodayForecast> call, Throwable t) {
-                        showAlertDialog(t);
+                        showRetrofitAlertDialog(t);
                     }
                 });
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    public void getForecast16() {
-        String latitude = Config.LOCATION_DNIPRO_LATITUDE;
-        String longitude = Config.LOCATION_DNIPRO_LONGITUDE;
+    public String getLatitude() {
         if(mLocation != null) {
-            latitude = String.valueOf(mLocation.getLatitude());
-            longitude = String.valueOf(mLocation.getLongitude());
+            return String.valueOf(mLocation.getLatitude());
         }
-        mService.getForecast16(latitude, longitude, Config.WEATHER_UNITS, Config.API_KEY)
+        return Config.LOCATION_DNIPRO_LATITUDE;
+    }
+
+    public String getLongitude() {
+        if(mLocation != null) {
+            return String.valueOf(mLocation.getLongitude());
+        }
+        return Config.LOCATION_DNIPRO_LONGITUDE;
+    }
+
+    public void getForecast16() {
+        mService.getForecast16(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<Forecast16>() {
                              @Override
                              public void onResponse(Call<Forecast16> call, Response<Forecast16> response) {
@@ -206,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                              @Override
                              public void onFailure(Call<Forecast16> call, Throwable t) {
-                                 showAlertDialog(t);
+                                 showRetrofitAlertDialog(t);
                              }
                          }
                 );
@@ -233,11 +224,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
-    public void showAlertDialog(Throwable t) {
+    public void showRetrofitAlertDialog(Throwable t) {
         new AlertDialog.Builder(MainActivity.this)
-                .setTitle(getString(R.string.error_dailog_title))
+                .setTitle(getString(R.string.retrofit_alert_dailog_title))
                 .setMessage(t.getLocalizedMessage())
-                .setPositiveButton(getString(R.string.error_dailog_btn_text), null)
+                .setPositiveButton(getString(R.string.retrofit_alert_dailog_btn_text), null)
+                .show();
+    }
+
+    private void showPermissionAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage(getString(R.string.permis_alert_dailog_message))
+                .setPositiveButton(getString(R.string.permis_alert_dailog_okbutton_text), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                })
                 .show();
     }
 }

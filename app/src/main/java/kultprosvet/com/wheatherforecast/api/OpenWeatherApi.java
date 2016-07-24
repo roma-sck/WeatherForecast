@@ -19,14 +19,4 @@ public interface OpenWeatherApi {
                                    @Query("lon") String lon,
                                    @Query("units") String units,
                                    @Query("APPID") String appid);
-
-//    @GET("weather")
-//    Call<TodayForecast> getTodayForecast(@Query("q") String q, @Query("units") String units, @Query("APPID") String appid);
-
-//    @GET("forecast/daily")
-//    Call<Forecast16> getForecast16(@Query("q") String q, @Query("units") String units, @Query("APPID") String appid);
-
-//    @GET("weather")
-//    Call<JsonElement> getTodayForecastJson(@Query("q") String q, @Query("units") String units, @Query("APPID") String appid);
-
 }
