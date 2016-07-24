@@ -173,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             latitude = String.valueOf(mLocation.getLatitude());
             longitude = String.valueOf(mLocation.getLongitude());
         }
-
         mService.getTodayForecast(latitude, longitude, Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<TodayForecast>() {
                     @Override
@@ -190,7 +189,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void getForecast16() {
-        mService.getForecast16(Config.LOCATION_DNEPR, Config.WEATHER_UNITS, Config.API_KEY)
+        String latitude = Config.LOCATION_DNIPRO_LATITUDE;
+        String longitude = Config.LOCATION_DNIPRO_LONGITUDE;
+        if(mLocation != null) {
+            latitude = String.valueOf(mLocation.getLatitude());
+            longitude = String.valueOf(mLocation.getLongitude());
+        }
+        mService.getForecast16(latitude, longitude, Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<Forecast16>() {
                              @Override
                              public void onResponse(Call<Forecast16> call, Response<Forecast16> response) {
