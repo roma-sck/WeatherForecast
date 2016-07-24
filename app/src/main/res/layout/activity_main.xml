@@ -44,7 +44,7 @@
                 android:layout_centerHorizontal="true" />
 
             <TextView
-                android:id="@+id/temp"
+                android:id="@+id/temp_now"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text='@{forecast.main.tempFormatted, default="23"}'
@@ -53,23 +53,23 @@
                 android:layout_centerHorizontal="true" />
 
             <TextView
-                android:id="@+id/min"
+                android:id="@+id/temp_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text='@{forecast.main.tempMinFormatted, default="15"}'
                 android:textSize="@dimen/text_size_20"
-                android:layout_marginLeft="@dimen/main_temp_min_margin"
-                android:layout_alignTop="@+id/max"
-                android:layout_alignParentStart="true" />
+                android:layout_alignTop="@+id/temp_max"
+                android:layout_toStartOf="@+id/temp_max" />
 
             <TextView
-                android:id="@+id/max"
+                android:id="@+id/temp_max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text='@{forecast.main.tempMaxFormatted, default="25"}'
                 android:textSize="@dimen/text_size_20"
-                android:layout_alignTop="@+id/temp"
-                android:layout_toEndOf="@+id/min" />
+                android:layout_alignTop="@+id/temp_now"
+                android:layout_toStartOf="@+id/icon"
+                android:layout_marginEnd="@dimen/temp_max_margin_end"/>
 
             <TextView
                 android:id="@+id/weather_main"
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:text='@{forecast.weather.get(0).main, default="clouds"}'
                 android:textSize="@dimen/text_size_20"
-                android:layout_alignTop="@+id/temp"
+                android:layout_alignTop="@+id/temp_now"
                 android:layout_alignEnd="@+id/recycleview"
                 android:layout_marginEnd="@dimen/main_weather_margin_end" />
 
@@ -86,15 +86,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text='@{forecast.weather.get(0).description, default="rain"}'
-                android:layout_below="@+id/max"
-                android:layout_alignEnd="@+id/weather_main" />
+                android:layout_below="@+id/weather_main"
+                android:layout_toEndOf="@+id/temp_now"
+                android:layout_marginStart="@dimen/weather_description_margin_start" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycleview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="LinearLayoutManager"
-                android:layout_below="@+id/temp"
+                android:layout_below="@+id/temp_now"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="@dimen/recycler_view_margin_top">
 
