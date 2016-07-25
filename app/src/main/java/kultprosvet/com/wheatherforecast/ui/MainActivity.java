@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void getTodayForecast() {
-        mService.getTodayForecast(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
+        mService.getTodayForecastByCoords(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<TodayForecast>() {
                     @Override
                     public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void getForecast16() {
-        mService.getForecast16(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
+        mService.getForecast16ByCoords(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<Forecast16>() {
                              @Override
                              public void onResponse(Call<Forecast16> call, Response<Forecast16> response) {

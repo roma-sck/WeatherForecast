@@ -9,14 +9,24 @@ import retrofit2.http.Query;
 public interface OpenWeatherApi {
 
     @GET("weather")
-    Call<TodayForecast> getTodayForecast(@Query("lat") String lat,
-                                         @Query("lon") String lon,
-                                         @Query("units") String units,
-                                         @Query("APPID") String appid);
+    Call<TodayForecast> getTodayForecastByCoords(@Query("lat") String lat,
+                                                 @Query("lon") String lon,
+                                                 @Query("units") String units,
+                                                 @Query("APPID") String appid);
+
+    @GET("weather")
+    Call<TodayForecast> getTodayForecastByCityName(@Query("q") String name,
+                                                   @Query("units") String units,
+                                                   @Query("APPID") String appid);
 
     @GET("forecast/daily")
-    Call<Forecast16> getForecast16(@Query("lat") String lat,
-                                   @Query("lon") String lon,
-                                   @Query("units") String units,
-                                   @Query("APPID") String appid);
+    Call<Forecast16> getForecast16ByCoords(@Query("lat") String lat,
+                                           @Query("lon") String lon,
+                                           @Query("units") String units,
+                                           @Query("APPID") String appid);
+
+    @GET("forecast/daily")
+    Call<Forecast16> getForecast16ByCityName(@Query("q") String name,
+                                             @Query("units") String units,
+                                             @Query("APPID") String appid);
 }
