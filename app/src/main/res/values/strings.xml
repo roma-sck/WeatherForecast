@@ -8,4 +8,5 @@
     <string name="permis_alert_dailog_okbutton_text">Close app</string>
 
     <string name="error_toast_text">permission is not available</string>
+
 </resources>

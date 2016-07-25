@@ -2,6 +2,7 @@
 package kultprosvet.com.wheatherforecast.models;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -205,7 +206,7 @@ public class ForecastItem {
     }
 
     public String getTempFormatted(){
-        return String.format("%.1f °/ %.1f °",getTemp().getMin(), getTemp().getMax());
+        return String.format(Locale.getDefault(), "%.1f °/ %.1f °",getTemp().getMin(), getTemp().getMax());
     }
 
 }
