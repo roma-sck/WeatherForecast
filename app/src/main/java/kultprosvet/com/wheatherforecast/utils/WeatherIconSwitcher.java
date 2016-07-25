@@ -12,6 +12,7 @@ public class WeatherIconSwitcher {
     public static final String CLOUDS = "Clouds";
     public static final String CLEAR = "Clear";
     public static final String ATMOSPHERE = "Atmosphere";
+    public static final String MIST = "Mist";
     public static final String SNOW = "Snow";
 
     public static int getIconSize(Context context) {
@@ -35,6 +36,9 @@ public class WeatherIconSwitcher {
                 statusIcon = R.drawable.sun;
                 break;
             case ATMOSPHERE:
+                statusIcon = R.drawable.tide;
+                break;
+            case MIST:
                 statusIcon = R.drawable.tide;
                 break;
             case SNOW:
