@@ -14,8 +14,8 @@
             android:id="@+id/row_icon"
             android:layout_width="@dimen/row_icon_size_width_height"
             android:layout_height="@dimen/row_icon_size_width_height"
-            android:layout_marginStart="@dimen/row_icon_margin"
-            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/row_icon_margin_start"
+            android:layout_alignTop="@+id/row_date"
             android:layout_alignParentStart="true" />
 
         <TextView
@@ -46,8 +46,8 @@
             android:textSize="@dimen/text_size_17"
             android:text='@{item.weather.get(0).main, default="sunny"}'
             android:layout_alignTop="@+id/row_temp"
-            android:layout_toEndOf="@+id/row_temp"
-            android:layout_marginStart="@dimen/row_weather_main_margin_start" />
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/row_weather_main_margin_end" />
 
     </RelativeLayout>
 </layout>

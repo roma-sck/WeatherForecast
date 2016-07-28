@@ -5,6 +5,8 @@ package kultprosvet.com.wheatherforecast.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Locale;
+
 
 public class Main {
 
@@ -115,13 +117,13 @@ public class Main {
     }
 
     public String getTempFormatted(){
-        return String.format("%.1f°",getTemp());
+        return String.format(Locale.getDefault(), "%.1f°",getTemp());
     }
     public String getTempMinFormatted(){
-        return String.format("%.1f°",getTempMin());
+        return String.format(Locale.getDefault(), "%.1f°",getTempMin());
     }
     public String getTempMaxFormatted(){
-        return String.format(" / %.1f°",getTempMax());
+        return String.format(Locale.getDefault(), "/%.1f°",getTempMax());
     }
 
 }
