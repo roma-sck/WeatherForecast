@@ -2,6 +2,7 @@ package kultprosvet.com.wheatherforecast.ui;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final int LOCATION_REQUEST_INTERVAL = 1000;
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
+    private static final int ADD_CITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,7 +262,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.menu_item:
+            case R.id.cities:
+                Intent intent=new Intent(this, CityListActivity.class);
+                startActivityForResult(intent, ADD_CITY);
                 break;
         }
         return true;
