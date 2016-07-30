@@ -133,11 +133,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onLocationChanged(Location location) {
+
         setLocation(location);
     }
 
     protected void setLocation(Location location) {
         mLocation = location;
+        if (mLocation.distanceTo(location)>1000){
+            initSwipeToRefresh();
+        }
     }
 
     @Override
