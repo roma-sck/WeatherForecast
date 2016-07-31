@@ -26,4 +26,7 @@
 
     <dimen name="temp_max_margin_end">5dp</dimen>
 
+	<dimen name="entered_city_name_margin_top">40dp</dimen>
+    <dimen name="btn_save_city_name_margin_top">100dp</dimen>
+
 </resources>

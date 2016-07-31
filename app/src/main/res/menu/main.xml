@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/cities"
-        android:title="Add City"/>
+        android:id="@+id/add_city"
+        android:title="@string/menu_add_city_item_title"/>
+    <item
+        android:id="@+id/city_list"
+        android:title="@string/menu_city_list_item_title"/>
 </menu>

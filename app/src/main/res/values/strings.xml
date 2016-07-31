@@ -9,4 +9,12 @@
 
     <string name="error_toast_text">permission is not available</string>
 
+    <string name="menu_add_city_item_title">Add City</string>
+    <string name="menu_city_list_item_title">Cities List</string>
+
+    <string name="enter_city_name_text">Please enter city name</string>
+    <string name="enter_city_name_hint">City name</string>
+
+    <string name="btn_save_city_name_text">Save</string>
+
 </resources>

@@ -262,10 +262,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()){
-            case R.id.cities:
-                Intent intent = new Intent(this, AddCityActivity.class);
+            case R.id.add_city:
+                intent = new Intent(this, AddCityActivity.class);
                 startActivityForResult(intent, ADD_CITY_REQ_CODE);
+                break;
+            case R.id.city_list:
+                intent = new Intent(this, CityListActivity.class);
+                startActivity(intent);
                 break;
         }
         return true;

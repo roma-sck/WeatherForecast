@@ -6,4 +6,6 @@
 
 	<color name="main_background_color">#F0FFFF</color>
 
+	<color name="text_hint_color">#6495ED</color>
+
 </resources>
