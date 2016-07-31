@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final int LOCATION_REQUEST_INTERVAL = 1000;
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
+    private static final int LOCATION_DISTANCE = 1000;
     private static final int ADD_CITY_REQ_CODE = 1;
 
     @Override
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     protected void setLocation(Location location) {
         mLocation = location;
-        if (mLocation.distanceTo(location)>1000){
+        if (mLocation.distanceTo(location) > LOCATION_DISTANCE){
             initSwipeToRefresh();
         }
     }
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.cities:
-                Intent intent=new Intent(this, CityListActivity.class);
+                Intent intent = new Intent(this, AddCityActivity.class);
                 startActivityForResult(intent, ADD_CITY_REQ_CODE);
                 break;
         }
