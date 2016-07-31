@@ -16,5 +16,6 @@
     <string name="enter_city_name_hint">City name</string>
 
     <string name="btn_save_city_name_text">Save</string>
+    <string name="wrong_city_name_msg_text">Entered value is wrong</string>
 
 </resources>
