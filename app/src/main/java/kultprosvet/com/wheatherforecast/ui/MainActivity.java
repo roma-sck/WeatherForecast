@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
     private static final int LOCATION_DISTANCE = 1000;
-    private static final int ADD_CITY_REQ_CODE = 1;
+    private static final int SET_CITY_REQ_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,20 +180,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    public String getLatitude() {
-        if(mLocation != null) {
-            return String.valueOf(mLocation.getLatitude());
-        }
-        return Config.LOCATION_DNIPRO_LATITUDE;
-    }
-
-    public String getLongitude() {
-        if(mLocation != null) {
-            return String.valueOf(mLocation.getLongitude());
-        }
-        return Config.LOCATION_DNIPRO_LONGITUDE;
-    }
-
     public void getForecast16() {
         mService.getForecast16ByCoords(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
                 .enqueue(new Callback<Forecast16>() {
@@ -211,6 +197,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                          }
                 );
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    public String getLatitude() {
+        if(mLocation != null) {
+            return String.valueOf(mLocation.getLatitude());
+        }
+        return Config.LOCATION_DNIPRO_LATITUDE;
+    }
+
+    public String getLongitude() {
+        if(mLocation != null) {
+            return String.valueOf(mLocation.getLongitude());
+        }
+        return Config.LOCATION_DNIPRO_LONGITUDE;
     }
 
     public void getIcon(String weatherMainStatus) {
@@ -266,13 +266,26 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         switch (item.getItemId()){
             case R.id.add_city:
                 intent = new Intent(this, AddCityActivity.class);
-                startActivityForResult(intent, ADD_CITY_REQ_CODE);
+                startActivity(intent);
                 break;
             case R.id.city_list:
                 intent = new Intent(this, CityListActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, SET_CITY_REQ_CODE);
                 break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SET_CITY_REQ_CODE) {
+            if (resultCode == RESULT_OK) {
+                getIntent().getStringExtra("clickedCity");
+                System.out.println("------intent="+getIntent().getStringExtra("clickedCity"));
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 }
