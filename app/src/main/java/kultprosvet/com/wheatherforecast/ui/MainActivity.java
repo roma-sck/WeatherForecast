@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final int LOCATION_REQUEST_INTERVAL = 1000;
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
-    private static final int ADD_CITY = 1;
+    private static final int ADD_CITY_REQ_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         switch (item.getItemId()){
             case R.id.cities:
                 Intent intent=new Intent(this, CityListActivity.class);
-                startActivityForResult(intent, ADD_CITY);
+                startActivityForResult(intent, ADD_CITY_REQ_CODE);
                 break;
         }
         return true;
