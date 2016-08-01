@@ -26,7 +26,7 @@ public class CityListActivity extends AppCompatActivity {
         }
 
         Intent returnIntent = new Intent();
-        returnIntent.putExtra("clickedCity", "London");
+        returnIntent.putExtra(getString(R.string.intent_extra_city_name), "London");
         setResult(RESULT_OK, returnIntent);
         finish();
     }
