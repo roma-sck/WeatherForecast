@@ -24,7 +24,7 @@ public class CityListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_city_list);
-        setTitle("Cities List");
+        setTitle(getString(R.string.city_list_activity_title));
 
         setAdapter();
     }
@@ -60,9 +60,7 @@ public class CityListActivity extends AppCompatActivity {
         public void onItemLongPress(View childView, int position) {
             CityDbDao cityDao = DBHelper.getSession(CityListActivity.this).getCityDbDao();
             cityDao.deleteByKey(mData.get(position).getId());
-            mAdapter.notifyDataSetChanged();
-            mAdapter.setItems(mData);
-            mBinding.recycleviewCitylist.setAdapter(mAdapter);
+            setAdapter();
         }
     }
 }

@@ -20,4 +20,6 @@
 
     <string name="intent_extra_city_name">clickedCity</string>
 
+    <string name="city_list_activity_title">>Cities List</string>
+
 </resources>
