@@ -291,14 +291,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 String city = data.getStringExtra(getString(R.string.intent_extra_city_name));
                 getTodayForecast(city, null);
                 getForecast16(city, null);
-            } else {
-                // write code if there's no result
-                resultCancelMsg();
             }
         }
-    }
-
-    public void resultCancelMsg() {
-        Toast.makeText(this, getString(R.string.result_cancel_msg_text), Toast.LENGTH_SHORT).show();
     }
 }

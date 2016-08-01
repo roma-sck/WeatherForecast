@@ -41,11 +41,9 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.Holder
     public static class Holder extends RecyclerView.ViewHolder {
         private CityDb mItem;
         private RowCityBinding mBinding;
-        private Context mContext;
 
         public Holder(View itemView) {
             super(itemView);
-            mContext = itemView.getContext();
             mBinding = DataBindingUtil.bind(itemView);
         }
 

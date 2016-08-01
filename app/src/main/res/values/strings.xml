@@ -18,8 +18,6 @@
     <string name="btn_save_city_name_text">Save</string>
     <string name="wrong_city_name_msg_text">Entered value is wrong</string>
 
-    <string name="result_cancel_msg_text">Result canceled</string>
-
     <string name="intent_extra_city_name">clickedCity</string>
 
 </resources>
