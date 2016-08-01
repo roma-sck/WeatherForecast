@@ -280,11 +280,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SET_CITY_REQ_CODE) {
             if (resultCode == RESULT_OK) {
-                getIntent().getStringExtra("clickedCity");
-                System.out.println("------intent="+getIntent().getStringExtra("clickedCity"));
-            }
-            if (resultCode == RESULT_CANCELED) {
-                //Write your code if there's no result
+                data.getStringExtra("clickedCity");
+            } else {
+                // write code if there's no result
             }
         }
     }

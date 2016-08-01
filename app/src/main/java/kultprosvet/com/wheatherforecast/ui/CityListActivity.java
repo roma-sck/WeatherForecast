@@ -22,7 +22,7 @@ public class CityListActivity extends AppCompatActivity {
         List<CityDb> data = cityDao.queryBuilder().build().list();
 
         for(int i = 0; i < data.size(); i++) {
-            System.out.println(data.get(i).getName());
+            data.get(i).getName();
         }
 
         Intent returnIntent = new Intent();
