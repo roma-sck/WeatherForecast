@@ -77,9 +77,8 @@
                 android:layout_height="wrap_content"
                 android:text='@{forecast.weather.get(0).main, default="clouds"}'
                 android:textSize="@dimen/text_size_20"
-                android:layout_alignTop="@+id/temp_now"
-                android:layout_alignEnd="@+id/recycleview"
-                android:layout_marginEnd="@dimen/main_weather_margin_end" />
+                android:layout_below="@+id/icon"
+                android:layout_alignStart="@+id/weather_description" />
 
             <TextView
                 android:id="@+id/weather_description"

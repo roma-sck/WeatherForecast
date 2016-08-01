@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         initSwipeToRefresh();
 
-        getTodayForecast();
-        getForecast16();
+        getTodayForecast(Config.LOCATION_DNIPRO_NAME, null);
+        getForecast16(Config.LOCATION_DNIPRO_NAME, null);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     public void initGoogleApiClient() {
-        if (mGoogleApiClient ==null) {
+        if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(LocationServices.API)
                     .addConnectionCallbacks(this)
@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onLocationChanged(Location location) {
-
         setLocation(location);
     }
 
@@ -164,38 +163,47 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    public void getTodayForecast() {
-        mService.getTodayForecastByCoords(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
-                .enqueue(new Callback<TodayForecast>() {
-                    @Override
-                    public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
-                        mBinding.setForecast(response.body());
-                        getIcon(response.body().getWeather().get(0).getMain());
-                    }
-                    @Override
-                    public void onFailure(Call<TodayForecast> call, Throwable t) {
-                        showRetrofitAlertDialog(t);
-                    }
-                });
+    public void getTodayForecast(String latOrName, String longitude) {
+        Call<TodayForecast> call;
+        if(longitude != null) {
+            call = mService.getTodayForecastByCoords(latOrName, longitude, Config.WEATHER_UNITS, Config.API_KEY);
+        } else {
+            call = mService.getTodayForecastByCityName(latOrName, Config.WEATHER_UNITS, Config.API_KEY);
+        }
+        call.enqueue(new Callback<TodayForecast>() {
+            @Override
+            public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
+                mBinding.setForecast(response.body());
+                getIcon(response.body().getWeather().get(0).getMain());
+            }
+            @Override
+            public void onFailure(Call<TodayForecast> call, Throwable t) {
+                showRetrofitAlertDialog(t);
+            }
+        });
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    public void getForecast16() {
-        mService.getForecast16ByCoords(getLatitude(), getLongitude(), Config.WEATHER_UNITS, Config.API_KEY)
-                .enqueue(new Callback<Forecast16>() {
-                             @Override
-                             public void onResponse(Call<Forecast16> call, Response<Forecast16> response) {
-                                 mAdapter = new ForecastAdapter();
-                                 mAdapter.setItems(response.body().getForecastList());
-                                 mBinding.recycleview.setAdapter(mAdapter);
-                             }
+    public void getForecast16(String latOrName, String longitude) {
+        Call<Forecast16> call;
+        if(longitude != null) {
+            call = mService.getForecast16ByCoords(latOrName, longitude, Config.WEATHER_UNITS, Config.API_KEY);
+        } else {
+            call = mService.getForecast16ByCityName(latOrName, Config.WEATHER_UNITS, Config.API_KEY);
+        }
+        call.enqueue(new Callback<Forecast16>() {
+            @Override
+            public void onResponse(Call<Forecast16> call, Response<Forecast16> response) {
+                mAdapter = new ForecastAdapter();
+                mAdapter.setItems(response.body().getForecastList());
+                mBinding.recycleview.setAdapter(mAdapter);
+            }
 
-                             @Override
-                             public void onFailure(Call<Forecast16> call, Throwable t) {
-                                 showRetrofitAlertDialog(t);
-                             }
-                         }
-                );
+            @Override
+            public void onFailure(Call<Forecast16> call, Throwable t) {
+                showRetrofitAlertDialog(t);
+            }
+        });
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -227,8 +235,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getTodayForecast();
-                getForecast16();
+                getTodayForecast(getLatitude(), getLongitude());
+                getForecast16(getLatitude(), getLongitude());
             }
         });
     }
@@ -280,7 +288,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SET_CITY_REQ_CODE) {
             if (resultCode == RESULT_OK) {
-                data.getStringExtra("clickedCity");
+                String city = data.getStringExtra("clickedCity");
+                getTodayForecast(city, null);
+                getForecast16(city, null);
             } else {
                 // write code if there's no result
             }
