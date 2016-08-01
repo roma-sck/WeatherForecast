@@ -16,9 +16,9 @@ import kultprosvet.com.wheatherforecast.db.DBHelper;
 import kultprosvet.com.wheatherforecast.utils.CityDbItemClickListener;
 
 public class CityListActivity extends AppCompatActivity {
-    private CityListAdapter mAdapter;
     private ActivityCityListBinding mBinding;
     private List<CityDb> mData;
+    public static final String CURRENT_LOCATION = "CLICKED_CURRENT_LOCATION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +26,26 @@ public class CityListActivity extends AppCompatActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_city_list);
         setTitle(getString(R.string.city_list_activity_title));
 
+        setCurrentLocOnClick();
         setAdapter();
+    }
+
+    private void setCurrentLocOnClick() {
+        mBinding.currentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                returnResult(CURRENT_LOCATION);
+            }
+        });
     }
 
     private void setAdapter() {
         CityDbDao cityDao = DBHelper.getSession(this).getCityDbDao();
         mData = cityDao.queryBuilder().build().list();
-        mAdapter = new CityListAdapter();
-        mAdapter.setItems(mData);
-        mBinding.recycleviewCitylist.setAdapter(mAdapter);
+
+        CityListAdapter adapter = new CityListAdapter();
+        adapter.setItems(mData);
+        mBinding.recycleviewCitylist.setAdapter(adapter);
         mBinding.recycleviewCitylist.addOnItemTouchListener(
                 new CityDbItemClickListener(this, new OnRecyclerItemClickListener()));
     }
@@ -55,7 +66,6 @@ public class CityListActivity extends AppCompatActivity {
             setAdapter();
         }
     }
-
 
     private void returnResult(String cityName) {
         Intent returnIntent = new Intent();

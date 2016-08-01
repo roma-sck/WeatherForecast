@@ -289,8 +289,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (requestCode == SET_CITY_REQ_CODE) {
             if (resultCode == RESULT_OK) {
                 String city = data.getStringExtra(getString(R.string.intent_extra_city_name));
-                getTodayForecast(city, null);
-                getForecast16(city, null);
+                if(city.equals(CityListActivity.CURRENT_LOCATION)) {
+                    getTodayForecast(getLatitude(), getLongitude());
+                    getForecast16(getLatitude(), getLongitude());
+                } else {
+                    getTodayForecast(city, null);
+                    getForecast16(city, null);
+                }
             }
         }
     }
