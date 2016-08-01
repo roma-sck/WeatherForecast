@@ -39,14 +39,6 @@ public class CityListActivity extends AppCompatActivity {
                 new CityDbItemClickListener(this, new OnRecyclerItemClickListener()));
     }
 
-
-    private void returnResult(String cityName) {
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra(getString(R.string.intent_extra_city_name), cityName);
-        setResult(RESULT_OK, returnIntent);
-        finish();
-    }
-
     private class OnRecyclerItemClickListener extends CityDbItemClickListener.SimpleOnItemClickListener {
         @Override
         public void onItemClick(View childView, int position) {
@@ -62,5 +54,13 @@ public class CityListActivity extends AppCompatActivity {
             cityDao.deleteByKey(mData.get(position).getId());
             setAdapter();
         }
+    }
+
+
+    private void returnResult(String cityName) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(getString(R.string.intent_extra_city_name), cityName);
+        setResult(RESULT_OK, returnIntent);
+        finish();
     }
 }

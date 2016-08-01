@@ -29,4 +29,7 @@
 	<dimen name="entered_city_name_margin_top">40dp</dimen>
     <dimen name="btn_save_city_name_margin_top">100dp</dimen>
 
+	<dimen name="city_list_text_size">25sp</dimen>
+	<dimen name="city_list_item_margin_bottom">20dp</dimen>
+
 </resources>
