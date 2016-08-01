@@ -14,18 +14,18 @@ import kultprosvet.com.wheatherforecast.db.DBHelper;
 
 public class AddCityActivity extends AppCompatActivity {
     private static final String CITY_NAME_CHECK_REGEX = "^[A-Z][a-z]+(?: [A-Z]\\.[A-Z]\\.?|(?: [A-Z][a-z]+)*)";
-    private ActivityAddCityBinding binding;
+    private ActivityAddCityBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_add_city);
+        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_add_city);
     }
 
     public void saveCityToDb(View view) {
         CityDbDao cityDao = DBHelper.getSession(this).getCityDbDao();
 
-        String enteredValue = binding.enteredCityName.getText().toString();
+        String enteredValue = mBinding.enteredCityName.getText().toString();
         if(validateCity(enteredValue)) {
             CityDb city = new CityDb();
             city.setName(enteredValue);
