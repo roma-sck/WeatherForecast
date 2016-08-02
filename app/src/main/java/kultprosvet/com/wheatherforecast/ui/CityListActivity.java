@@ -79,7 +79,6 @@ public class CityListActivity extends AppCompatActivity {
             final Menu menu = popupMenu.getMenu();
             popupMenu.getMenuInflater().inflate(R.menu.popup_menu, menu);
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
@@ -94,7 +93,6 @@ public class CityListActivity extends AppCompatActivity {
                     }
                 }
             });
-
             popupMenu.show();
         }
     }
@@ -109,12 +107,19 @@ public class CityListActivity extends AppCompatActivity {
     private void editCity(int city) {
         CityDbDao cityDao = DBHelper.getSession(CityListActivity.this).getCityDbDao();
         cityDao.deleteByKey(mData.get(city).getId());
-        setAdapter();
+        Intent intent = new Intent(this, AddCityActivity.class);
+        startActivity(intent);
     }
 
     private void deleteCity(int city) {
         CityDbDao cityDao = DBHelper.getSession(CityListActivity.this).getCityDbDao();
         cityDao.deleteByKey(mData.get(city).getId());
+        setAdapter();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
         setAdapter();
     }
 }
