@@ -32,4 +32,6 @@
 	<dimen name="city_list_text_size">25sp</dimen>
 	<dimen name="city_list_item_margin_bottom">20dp</dimen>
 
+	<dimen name="list_divider_height">1dp</dimen>
+
 </resources>

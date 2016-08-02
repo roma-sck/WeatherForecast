@@ -14,6 +14,7 @@ import kultprosvet.com.wheatherforecast.db.CityDb;
 import kultprosvet.com.wheatherforecast.db.CityDbDao;
 import kultprosvet.com.wheatherforecast.db.DBHelper;
 import kultprosvet.com.wheatherforecast.utils.CityDbItemClickListener;
+import kultprosvet.com.wheatherforecast.utils.SimpleDividerItemDecoration;
 
 public class CityListActivity extends AppCompatActivity {
     private ActivityCityListBinding mBinding;
@@ -45,6 +46,8 @@ public class CityListActivity extends AppCompatActivity {
 
         CityListAdapter adapter = new CityListAdapter();
         adapter.setItems(mData);
+        mBinding.recycleviewCitylist.addItemDecoration(new SimpleDividerItemDecoration(
+                getApplicationContext()));
         mBinding.recycleviewCitylist.setAdapter(adapter);
         mBinding.recycleviewCitylist.addOnItemTouchListener(
                 new CityDbItemClickListener(this, new OnRecyclerItemClickListener()));

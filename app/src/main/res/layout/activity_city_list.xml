@@ -25,6 +25,12 @@
             android:layout_marginBottom="@dimen/city_list_item_margin_bottom"
             android:layout_gravity="center_horizontal" />
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_divider_height"
+            android:background="@color/divider_color_gray" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleview_citylist"
             android:layout_width="match_parent"
