@@ -9,10 +9,10 @@ import android.view.View;
 
 import kultprosvet.com.wheatherforecast.R;
 
-public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
+public class CityListDividerDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
-    public SimpleDividerItemDecoration(Context context) {
+    public CityListDividerDecoration(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mDivider = context.getResources().getDrawable(R.drawable.line_divider, context.getTheme());
         } else {

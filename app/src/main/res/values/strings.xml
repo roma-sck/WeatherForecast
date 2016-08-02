@@ -24,4 +24,7 @@
 
     <string name="current_location_text">Current location</string>
 
+    <string name="popup_menu_edit_text">Edit city</string>
+    <string name="popup_menu_delete_text">Delete city</string>
+
 </resources>
