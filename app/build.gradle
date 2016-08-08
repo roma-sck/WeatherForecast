@@ -18,7 +18,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding{
+    dataBinding {
         enabled true
     }
 }
@@ -27,17 +27,18 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     // support library
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
     // retrofit2 api requests
+    // picasso loading imgs
+    // gms location services
+    // lib added to fix bug crashing app on devices with android <5
+    // greendao db
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    // picasso loading imgs
     compile 'com.squareup.picasso:picasso:2.5.2'
-    // gms location services
-    compile 'com.google.android.gms:play-services:9.2.1'
-    // lib added to fix bug crashing app on devices with android <5
+    compile 'com.google.android.gms:play-services:9.4.0'
     compile 'com.android.support:multidex:1.0.1'
-    // greendao db
     compile 'de.greenrobot:greendao:2.1.0'
+    compile 'com.android.support:support-v4:24.1.1'
 }

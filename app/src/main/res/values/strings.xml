@@ -1,5 +1,5 @@
 <resources>
-	<string name="app_name">Weather Forecast</string>
+    <string name="app_name">Weather Forecast</string>
 
     <string name="retrofit_alert_dailog_title">Error</string>
     <string name="retrofit_alert_dailog_btn_text">Close</string>
@@ -26,5 +26,8 @@
 
     <string name="popup_menu_edit_text">Edit city</string>
     <string name="popup_menu_delete_text">Delete city</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
