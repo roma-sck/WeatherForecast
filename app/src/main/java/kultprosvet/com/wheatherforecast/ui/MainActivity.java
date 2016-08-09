@@ -9,6 +9,7 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -57,12 +58,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.setActivity(this);
 
-        mService = ApiServiceBuilder.getApiService();
+//        mService = ApiServiceBuilder.getApiService();
+//
+//        initSwipeToRefresh();
+//
+//        getTodayForecast(Config.LOCATION_DNIPRO_NAME, null);
+//        getForecast16(Config.LOCATION_DNIPRO_NAME, null);
 
-        initSwipeToRefresh();
-
-        getTodayForecast(Config.LOCATION_DNIPRO_NAME, null);
-        getForecast16(Config.LOCATION_DNIPRO_NAME, null);
+        MainFragment newsListFragment = new MainFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.container, newsListFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
