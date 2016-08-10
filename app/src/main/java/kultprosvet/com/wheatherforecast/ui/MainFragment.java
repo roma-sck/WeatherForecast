@@ -2,9 +2,7 @@ package kultprosvet.com.wheatherforecast.ui;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
@@ -59,7 +57,6 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
     public MainFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

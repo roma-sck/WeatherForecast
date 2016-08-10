@@ -12,13 +12,17 @@ import kultprosvet.com.wheatherforecast.R;
 public class MainActivity extends AppCompatActivity {
 
     public static final int SET_CITY_REQ_CODE = 1;
-    MainFragment mMainFragment;
+    private MainFragment mMainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        showFragmentMain();
+    }
+
+    private void showFragmentMain() {
         mMainFragment = new MainFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, mMainFragment);
