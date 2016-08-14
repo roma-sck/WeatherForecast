@@ -70,7 +70,7 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
 
         mService = ApiServiceBuilder.getApiService();
         initSwipeToRefresh();
-        // get weather forecast
+        // get default weather forecast
         getTodayForecast(Config.LOCATION_DNIPRO_NAME, null);
         getForecast16(Config.LOCATION_DNIPRO_NAME, null);
 
