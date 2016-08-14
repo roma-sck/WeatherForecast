@@ -11,6 +11,14 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/row_forecast_bottom_top">
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_divider_height"
+            android:background="@color/divider_color_black"
+            android:alpha="0.22"
+            android:layout_alignParentStart="true" />
+
         <ImageView
             android:id="@+id/row_icon"
             android:layout_width="@dimen/row_icon_size_width_height"
