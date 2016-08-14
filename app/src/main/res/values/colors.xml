@@ -10,4 +10,11 @@
 
 	<color name="divider_color_gray">@android:color/darker_gray</color>
 
+	<color name="detailColorPrimary">#4682B4</color>
+	<color name="text_color_white">@android:color/white</color>
+
+	<color name="side_nav_bar_color_center">#FF3E69B3</color>
+	<color name="side_nav_bar_color_end">#FF3E52B3</color>
+	<color name="side_nav_bar_color_start">#FF3E79B3</color>
+
 </resources>

@@ -7,8 +7,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -66,19 +67,16 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        Intent intent;
+        switch(id) {
+            case R.id.nav_add_city :
+                intent = new Intent(this, AddCityActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_city_list :
+                intent = new Intent(this, CityListActivity.class);
+                startActivityForResult(intent, SET_CITY_REQ_CODE);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -94,15 +92,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
         switch (item.getItemId()){
-            case R.id.add_city:
-                intent = new Intent(this, AddCityActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.city_list:
-                intent = new Intent(this, CityListActivity.class);
-                startActivityForResult(intent, SET_CITY_REQ_CODE);
+            case R.id.action_settings:
+                // open settings
                 break;
         }
         return true;
