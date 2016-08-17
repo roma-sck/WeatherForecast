@@ -2,6 +2,7 @@ package kultprosvet.com.wheatherforecast.ui;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import kultprosvet.com.wheatherforecast.R;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity
     public static final int SET_CITY_REQ_CODE = 1;
     private MainFragment mMainFragment;
     private Toolbar mToolbar;
+    public static final String BACKSTACK_TAG = "BACKSTACK_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,12 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            int count = getFragmentManager().getBackStackEntryCount();
+            if (count == 0) {
+                super.onBackPressed();
+            } else {
+                getFragmentManager().popBackStack();
+            }
         }
     }
 
@@ -70,8 +78,11 @@ public class MainActivity extends AppCompatActivity
         Intent intent;
         switch(id) {
             case R.id.nav_add_city :
-                intent = new Intent(this, AddCityActivity.class);
-                startActivity(intent);
+                AddCityFragment addCityFragment = new AddCityFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.fragment_container, addCityFragment);
+                fragmentTransaction.addToBackStack(BACKSTACK_TAG);
+                fragmentTransaction.commit();
                 break;
             case R.id.nav_city_list :
                 intent = new Intent(this, CityListActivity.class);
@@ -113,6 +124,15 @@ public class MainActivity extends AppCompatActivity
                     mMainFragment.getTodayForecast(city, null);
                     mMainFragment.getForecast16(city, null);
                 }
+            }
+        }
+    }
+
+    public void onFragmentViewClick(View v) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment != null && fragment.isVisible()) {
+            if (fragment instanceof AddCityFragment) {
+                ((AddCityFragment) fragment).saveCityToDb(v);
             }
         }
     }

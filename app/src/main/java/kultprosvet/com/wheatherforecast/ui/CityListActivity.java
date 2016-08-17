@@ -105,10 +105,10 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     private void editCity(int city) {
-        CityDbDao cityDao = DBHelper.getSession(CityListActivity.this).getCityDbDao();
-        cityDao.deleteByKey(mData.get(city).getId());
-        Intent intent = new Intent(this, AddCityActivity.class);
-        startActivity(intent);
+//        CityDbDao cityDao = DBHelper.getSession(CityListActivity.this).getCityDbDao();
+//        cityDao.deleteByKey(mData.get(city).getId());
+//        Intent intent = new Intent(this, AddCityActivity.class);
+//        startActivity(intent);
     }
 
     private void deleteCity(int city) {
