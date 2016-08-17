@@ -1,10 +1,10 @@
 <resources>
-    <string-array name="color_scheme_values_list">
-        <item>Light background</item>
-        <item>Dark background</item>
+    <string-array name="icon_set_values_list">
+        <item>Icon Set 1</item>
+        <item>Icon Set 2</item>
     </string-array>
 
-    <string-array name="list_values">
+    <string-array name="icon_set_values">
         <item>1</item>
         <item>2</item>
     </string-array>

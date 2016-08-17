@@ -3,10 +3,12 @@ package kultprosvet.com.wheatherforecast.ui;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -53,6 +55,7 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
     private GoogleApiClient mGoogleApiClient;
     private Location mLocation;
     private static final int LOCATION_DISTANCE = 1000;
+    private int mIconSet = 1;
 
     public MainFragment() {
         // Required empty public constructor
@@ -74,7 +77,21 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
         getTodayForecast(Config.LOCATION_DNIPRO_NAME, null);
         getForecast16(Config.LOCATION_DNIPRO_NAME, null);
 
+        setIconSet();
+
         return view;
+    }
+
+    private void setIconSet() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
+        String icon_set = sharedPrefs.getString("icon_set", "1");
+        int iconSetId;
+        if(icon_set.equals("2")) {
+            iconSetId = 2;
+        } else {
+            iconSetId = 1;
+        }
+        mIconSet = iconSetId;
     }
 
     @Override
@@ -186,7 +203,7 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
             @Override
             public void onResponse(Call<TodayForecast> call, Response<TodayForecast> response) {
                 mBinding.setForecast(response.body());
-                getIcon(response.body().getWeather().get(0).getMain());
+                getIcon(response.body().getWeather().get(0).getMain(), mIconSet);
             }
             @Override
             public void onFailure(Call<TodayForecast> call, Throwable t) {
@@ -207,7 +224,7 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
             @Override
             public void onResponse(Call<Forecast16> call, Response<Forecast16> response) {
                 mAdapter = new ForecastAdapter();
-                mAdapter.setItems(response.body().getForecastList());
+                mAdapter.setItems(response.body().getForecastList(), mIconSet);
                 mBinding.recycleview.setAdapter(mAdapter);
             }
 
@@ -233,9 +250,9 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
         return Config.LOCATION_DNIPRO_LONGITUDE;
     }
 
-    public void getIcon(String weatherMainStatus) {
+    public void getIcon(String weatherMainStatus, int iconSetId) {
         int size = WeatherIconSwitcher.getIconSize(getActivity());
-        int icon = WeatherIconSwitcher.switchIcon(weatherMainStatus);
+        int icon = WeatherIconSwitcher.switchIcon(weatherMainStatus, iconSetId);
         Picasso.with(getActivity()).load(icon)
                 .resize(size, size)
                 .centerInside()

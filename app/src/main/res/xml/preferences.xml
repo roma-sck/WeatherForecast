@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:title="Color Scheme"
-        android:summary="Select the color scheme"
-        android:key="color_scheme"
+        android:title="Icon Set Scheme"
+        android:summary="Select the icon set"
+        android:key="icon_set"
         android:defaultValue="1"
-        android:entries="@array/color_scheme_values_list"
-        android:entryValues="@array/list_values" />
+        android:entries="@array/icon_set_values_list"
+        android:entryValues="@array/icon_set_values" />
 </PreferenceScreen>

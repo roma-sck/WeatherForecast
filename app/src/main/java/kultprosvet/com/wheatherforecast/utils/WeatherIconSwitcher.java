@@ -20,33 +20,37 @@ public class WeatherIconSwitcher {
         return Math.round(metrics.density * ICON_SIZE_COEFF);
     }
 
-    public static int switchIcon(String status) {
+    public static int switchIcon(String status, int iconSetId) {
         int statusIcon;
-        switch (status) {
-            case STORM:
-                statusIcon = R.drawable.storm;
-                break;
-            case RAIN:
-                statusIcon = R.drawable.rain;
-                break;
-            case CLOUDS:
-                statusIcon = R.drawable.cloudy;
-                break;
-            case CLEAR:
-                statusIcon = R.drawable.sun;
-                break;
-            case ATMOSPHERE:
-                statusIcon = R.drawable.tide;
-                break;
-            case MIST:
-                statusIcon = R.drawable.tide;
-                break;
-            case SNOW:
-                statusIcon = R.drawable.snowing;
-                break;
-            default:
-                statusIcon = R.drawable.calm;
-                break;
+        if(iconSetId == 1) {
+            switch (status) {
+                case STORM:
+                    statusIcon = R.drawable.storm;
+                    break;
+                case RAIN:
+                    statusIcon = R.drawable.rain;
+                    break;
+                case CLOUDS:
+                    statusIcon = R.drawable.cloudy;
+                    break;
+                case CLEAR:
+                    statusIcon = R.drawable.sun;
+                    break;
+                case ATMOSPHERE:
+                    statusIcon = R.drawable.tide;
+                    break;
+                case MIST:
+                    statusIcon = R.drawable.tide;
+                    break;
+                case SNOW:
+                    statusIcon = R.drawable.snowing;
+                    break;
+                default:
+                    statusIcon = R.drawable.calm;
+                    break;
+            }
+        } else {
+            statusIcon = R.drawable.calm;
         }
         return statusIcon;
     }

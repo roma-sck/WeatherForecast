@@ -1,6 +1,8 @@
 package kultprosvet.com.wheatherforecast.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity
     public static final int SET_CITY_REQ_CODE = 1;
     private MainFragment mMainFragment;
     private Toolbar mToolbar;
-    public static final String BACKSTACK_TAG = "BACKSTACK_TAG";
+    private static final String BACKSTACK_TAG = "BACKSTACK_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity
 
         setUpDrawer();
 
-        showFragmentMain();
+        showMainFragment();
     }
 
     private void setUpDrawer() {
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void showFragmentMain() {
+    private void showMainFragment() {
         mMainFragment = new MainFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, mMainFragment);
@@ -78,11 +80,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent;
         switch(id) {
             case R.id.nav_add_city :
-                AddCityFragment addCityFragment = new AddCityFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.fragment_container, addCityFragment);
-                fragmentTransaction.addToBackStack(BACKSTACK_TAG);
-                fragmentTransaction.commit();
+                showAddCityFragment();
                 break;
             case R.id.nav_city_list :
                 intent = new Intent(this, CityListActivity.class);
@@ -93,6 +91,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showAddCityFragment() {
+        AddCityFragment addCityFragment = new AddCityFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fragment_container, addCityFragment);
+        fragmentTransaction.addToBackStack(BACKSTACK_TAG);
+        fragmentTransaction.commit();
     }
 
     @Override

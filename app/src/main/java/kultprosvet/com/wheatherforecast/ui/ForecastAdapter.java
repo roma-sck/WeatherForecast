@@ -18,6 +18,7 @@ import kultprosvet.com.wheatherforecast.utils.WeatherIconSwitcher;
 
 public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder> {
     private List<ForecastItem> mItems;
+    private int mIconSet;
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,7 +29,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        holder.setItem(mItems.get(position));
+        holder.setItem(mItems.get(position), mIconSet);
     }
 
     @Override
@@ -36,8 +37,9 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder
         return mItems == null ? 0 : mItems.size();
     }
 
-    public ForecastAdapter setItems(List<ForecastItem> items) {
+    public ForecastAdapter setItems(List<ForecastItem> items, int iconSetId) {
         mItems = items;
+        mIconSet = iconSetId;
         return this;
     }
 
@@ -56,16 +58,16 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Holder
             return mItem;
         }
 
-        public Holder setItem(ForecastItem item) {
+        public Holder setItem(ForecastItem item, int iconSetId) {
             mItem = item;
             mRowBinding.setItem(item);
-            getRowIcon(item.getWeather().get(0).getMain());
+            getRowIcon(item.getWeather().get(0).getMain(), iconSetId);
             return this;
         }
 
-        private void getRowIcon(String weatherMainStatus) {
+        private void getRowIcon(String weatherMainStatus, int iconSetId) {
             int size = WeatherIconSwitcher.getIconSize(mContext);
-            int icon = WeatherIconSwitcher.switchIcon(weatherMainStatus);
+            int icon = WeatherIconSwitcher.switchIcon(weatherMainStatus, iconSetId);
             Picasso.with(mContext).load(icon)
                     .resize(size, size)
                     .centerInside()
