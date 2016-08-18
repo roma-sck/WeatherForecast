@@ -50,7 +50,32 @@ public class WeatherIconSwitcher {
                     break;
             }
         } else {
-            statusIcon = R.drawable.calm;
+            switch (status) {
+                case STORM:
+                    statusIcon = R.drawable.storm2;
+                    break;
+                case RAIN:
+                    statusIcon = R.drawable.rain2;
+                    break;
+                case CLOUDS:
+                    statusIcon = R.drawable.cloudy2;
+                    break;
+                case CLEAR:
+                    statusIcon = R.drawable.sun2;
+                    break;
+                case ATMOSPHERE:
+                    statusIcon = R.drawable.tide2;
+                    break;
+                case MIST:
+                    statusIcon = R.drawable.tide2;
+                    break;
+                case SNOW:
+                    statusIcon = R.drawable.snowing2;
+                    break;
+                default:
+                    statusIcon = R.drawable.calm2;
+                    break;
+            }
         }
         return statusIcon;
     }
