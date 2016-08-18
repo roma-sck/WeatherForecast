@@ -56,6 +56,10 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
     private Location mLocation;
     private static final int LOCATION_DISTANCE = 1000;
     private int mIconSet = 1;
+    private static final String ICON_SET_KEY = "icon_set";
+    private static final String FIRST_ICON_SET_VALUE = "1";
+    private static final int ICON_SET_VAL_ONE = 1;
+    private static final int ICON_SET_VAL_TWO = 2;
 
     public MainFragment() {
         // Required empty public constructor
@@ -77,19 +81,23 @@ public class MainFragment extends Fragment implements GoogleApiClient.Connection
         getTodayForecast(Config.LOCATION_DNIPRO_NAME, null);
         getForecast16(Config.LOCATION_DNIPRO_NAME, null);
 
-        setIconSet();
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        setIconSet();
+        super.onResume();
     }
 
     private void setIconSet() {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-        String icon_set = sharedPrefs.getString("icon_set", "1");
+        String icon_set = sharedPrefs.getString(ICON_SET_KEY, FIRST_ICON_SET_VALUE);
         int iconSetId;
-        if(icon_set.equals("2")) {
-            iconSetId = 2;
+        if(icon_set.equals(FIRST_ICON_SET_VALUE)) {
+            iconSetId = ICON_SET_VAL_ONE;
         } else {
-            iconSetId = 1;
+            iconSetId = ICON_SET_VAL_TWO;
         }
         mIconSet = iconSetId;
     }
